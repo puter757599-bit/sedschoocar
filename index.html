@@ -193,7 +193,7 @@
             <h2 class="text-lg sm:text-xl font-bold text-slate-800">新北市學生交通車即時聯合稽查紀錄</h2>
           </div>
           <p class="text-xs sm:text-sm text-slate-500 mt-1">
-            由教育局、監理所及警察局三方聯合執行，現場逐項勾選判定車況與法規符合度，填寫完畢可即時下載標準公務稽查單 (PDF) 並寫入統計庫。
+            由教育局、監理所及警察局三方聯合執行，現場逐項查驗判定車況與法規符合度，填寫完畢可即時產製標準公務稽查核章單 (PDF) 並寫入庫存。
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
@@ -286,7 +286,7 @@
           </div>
         </div>
 
-        <!-- 區塊二：車輛現況與駕駛人員資訊 -->
+        <!-- 區塊二：車輛現況與駕駛人員資訊 (客運選單+其他填寫、行照發照日期、實載選填) -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="bg-gradient-to-r from-brand-50 to-slate-50 border-b border-slate-200 px-4 py-3 sm:px-6 flex items-center justify-between">
             <h3 class="text-sm sm:text-base font-semibold text-brand-900 flex items-center space-x-2">
@@ -297,12 +297,26 @@
           </div>
 
           <div class="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+            <!-- 單位名稱 (下拉選單 + 選其他展開填寫) -->
             <div class="flex flex-col">
               <label for="insp_operator" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5 h-5 flex items-center">
                 <span>單位名稱 (通運/客運業者)</span>
                 <span class="text-rose-500 ml-1">*</span>
               </label>
-              <input type="text" id="insp_operator" name="operator" required placeholder="如：台北汽車客運股份有限公司" class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 px-3 border bg-white font-medium text-slate-800">
+              <select id="insp_operator" name="operator" required onchange="handleOperatorSelectChange()" class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 focus:ring-brand-500 px-3 border bg-white font-medium text-slate-800">
+                <option value="" disabled selected>請選擇通運/客運業者 ▼</option>
+                <option value="台北汽車客運股份有限公司">台北汽車客運股份有限公司</option>
+                <option value="大都會汽車客運股份有限公司">大都會汽車客運股份有限公司</option>
+                <option value="指南汽車客運股份有限公司">指南汽車客運股份有限公司</option>
+                <option value="三重汽車客運股份有限公司">三重汽車客運股份有限公司</option>
+                <option value="欣欣大眾汽車客運股份有限公司">欣欣大眾汽車客運股份有限公司</option>
+                <option value="新北通運有限公司">新北通運有限公司</option>
+                <option value="統聯通運股份有限公司">統聯通運股份有限公司</option>
+                <option value="東南汽車客運股份有限公司">東南汽車客運股份有限公司</option>
+                <option value="友善通用交通有限公司">友善通用交通有限公司</option>
+                <option value="安全通運有限公司">安全通運有限公司</option>
+                <option value="其他通運業者">其他 (自行輸入業者名稱...)</option>
+              </select>
             </div>
 
             <div class="flex flex-col">
@@ -324,9 +338,10 @@
               <input type="text" id="insp_plate" name="plate" required placeholder="如：KKA-1234" class="uppercase w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 px-3 border bg-white font-medium">
             </div>
 
+            <!-- 行照發照日期 (更新名稱) -->
             <div class="flex flex-col">
               <label for="insp_license_date" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5 h-5 flex items-center">
-                <span>發照日期</span><span class="text-rose-500 ml-1">*</span>
+                <span>行照發照日期</span><span class="text-rose-500 ml-1">*</span>
               </label>
               <input type="date" id="insp_license_date" name="license_date" required class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 px-3 border bg-white font-medium">
             </div>
@@ -336,11 +351,11 @@
                 <span>座椅類型</span><span class="text-rose-500 ml-1">*</span>
               </label>
               <div class="grid grid-cols-2 gap-2 h-10">
-                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
+                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-brand-400 transition">
                   <input type="radio" name="seat_type" value="非字" checked class="w-3.5 h-3.5 text-brand-600">
                   <span class="ml-1.5 text-xs sm:text-sm font-medium text-slate-700">非字型</span>
                 </label>
-                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
+                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-brand-400 transition">
                   <input type="radio" name="seat_type" value="川字" class="w-3.5 h-3.5 text-brand-600">
                   <span class="ml-1.5 text-xs sm:text-sm font-medium text-slate-700">川字型</span>
                 </label>
@@ -357,12 +372,14 @@
               </div>
             </div>
 
+            <!-- 現場實載人數 (改為非必填) -->
             <div class="flex flex-col">
               <label for="insp_actual_passengers" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5 h-5 flex items-center">
-                <span>現場實載人數</span><span class="text-rose-500 ml-1">*</span>
+                <span>現場實載人數</span>
+                <span class="text-slate-400 text-[11px] font-normal ml-1">(選填)</span>
               </label>
               <div class="relative h-10">
-                <input type="number" id="insp_actual_passengers" min="0" max="80" placeholder="如: 38" required oninput="checkOverloadStatus()" class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 pl-3 pr-8 border bg-white font-medium">
+                <input type="number" id="insp_actual_passengers" min="0" max="80" placeholder="如: 38 (無人可略)" oninput="checkOverloadStatus()" class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 pl-3 pr-8 border bg-white font-medium">
                 <span class="absolute right-3 top-2.5 text-xs text-slate-400 font-medium pointer-events-none">人</span>
               </div>
             </div>
@@ -397,11 +414,11 @@
                 <span>駕照種類</span><span class="text-rose-500 ml-1">*</span>
               </label>
               <div class="grid grid-cols-2 gap-2 h-10">
-                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
+                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-brand-400 transition">
                   <input type="radio" name="license_type" value="職業" checked onchange="checkDriverLicenseStatus()" class="w-3.5 h-3.5 text-brand-600">
                   <span class="ml-1.5 text-xs font-semibold text-emerald-700">職業駕照</span>
                 </label>
-                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer">
+                <label class="flex items-center justify-center px-2 rounded-lg border border-slate-200 bg-white cursor-pointer hover:border-rose-300 transition">
                   <input type="radio" name="license_type" value="普通" onchange="checkDriverLicenseStatus()" class="w-3.5 h-3.5 text-rose-600">
                   <span class="ml-1.5 text-xs font-semibold text-rose-700">普通駕照</span>
                 </label>
@@ -411,13 +428,22 @@
             <div class="flex flex-col">
               <label for="insp_escort_name" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1.5 h-5 flex items-center">
                 <span>隨車人員姓名</span>
+                <span class="text-slate-400 text-[11px] font-normal ml-1">(選填)</span>
               </label>
               <input type="text" id="insp_escort_name" placeholder="輸入隨車人員姓名" class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 px-3 border bg-white font-medium">
             </div>
 
+            <!-- 其他通運業者展開輸入框 -->
+            <div id="customOperatorWrapper" class="hidden col-span-1 sm:col-span-2 lg:col-span-4 bg-brand-50/50 p-3 rounded-lg border border-brand-200">
+              <label for="insp_operator_custom" class="block text-xs font-semibold text-brand-900 mb-1">
+                請輸入通運/客運業者完整全名 <span class="text-rose-500">*</span>
+              </label>
+              <input type="text" id="insp_operator_custom" placeholder="例如：新北客運通運有限公司" class="w-full h-10 text-xs sm:text-sm rounded-lg border-slate-300 focus:border-brand-500 px-3 border bg-white">
+            </div>
+
             <div id="overloadWarning" class="hidden col-span-1 sm:col-span-2 lg:col-span-4 text-xs font-semibold text-rose-600 bg-rose-50 p-2.5 rounded-lg border border-rose-200 flex items-center shadow-sm">
               <i class="fa-solid fa-triangle-exclamation mr-2 text-rose-500 text-sm"></i>
-              <span>警告：實載人數超過法定限載人數，系統自動判定為「超載違規」！</span>
+              <span>警告：現場實載人數超過法定限載人數，系統自動判定為「超載違規」！</span>
             </div>
 
             <div id="licenseWarning" class="hidden col-span-1 sm:col-span-2 lg:col-span-4 text-xs font-semibold text-rose-600 bg-rose-50 p-2.5 rounded-lg border border-rose-200 flex items-center shadow-sm">
@@ -427,34 +453,25 @@
           </div>
         </div>
 
-        <!-- 區塊三：安全設備檢核項目 -->
+        <!-- 區塊三：安全設備檢核項目 (已移除反光標誌與合格標章，行車紀錄器說明更新) -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="bg-gradient-to-r from-brand-50 to-slate-50 border-b border-slate-200 px-3.5 py-3 sm:px-6 flex items-center justify-between gap-2">
-            <h3 class="text-xs sm:text-base font-bold text-brand-900 flex items-center space-x-2 min-w-0 flex-1 mr-2">
-              <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs flex-shrink-0">3</span>
-              <span class="truncate">車輛安全檢驗指標 <span class="hidden sm:inline font-normal text-xs text-slate-500">(符合請打勾)</span></span>
-            </h3>
+            <div>
+              <h3 class="text-xs sm:text-base font-bold text-brand-900 flex items-center space-x-2">
+                <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs flex-shrink-0">3</span>
+                <span>車輛安全檢驗指標 <span class="hidden sm:inline font-normal text-xs text-slate-500">(現場查驗項目，符合請打勾)</span></span>
+              </h3>
+              <p class="text-xs text-slate-500 mt-0.5">現場查核滅火器、車門安全門、警報裝置、行車紀錄器（反光標誌與標章依規免檢）</p>
+            </div>
             <div class="flex items-center space-x-1.5 flex-shrink-0">
               <button type="button" onclick="selectAllChecks(true)" class="text-[10px] sm:text-xs text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-2 py-1 rounded border border-emerald-200 font-medium">全部合格</button>
               <button type="button" onclick="selectAllChecks(false)" class="text-[10px] sm:text-xs text-slate-600 bg-slate-100 hover:bg-slate-200 px-2 py-1 rounded border border-slate-200 font-medium">全部取消</button>
             </div>
           </div>
 
-          <div class="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <div class="p-3.5 rounded-xl border border-slate-200 bg-white" id="card_check_reflector">
-              <label class="flex items-start space-x-3 cursor-pointer">
-                <input type="checkbox" id="check_reflector" checked onchange="handleIndicatorChange()" class="w-5 h-5 mt-0.5 text-brand-600 rounded border-slate-300">
-                <div class="flex-1">
-                  <div class="flex items-center justify-between">
-                    <span class="font-bold text-sm text-slate-800">反光標誌</span>
-                    <span id="badge_check_reflector" class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">符合</span>
-                  </div>
-                  <p class="text-xs text-slate-500 mt-1">車身兩側與後方反光識別標線、標誌完整清晰。</p>
-                </div>
-              </label>
-            </div>
-
-            <div class="p-3.5 rounded-xl border border-slate-200 bg-white" id="card_check_extinguisher">
+          <div class="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- 1. 滅火器 -->
+            <div class="p-3.5 rounded-xl border border-slate-200 bg-white hover:shadow-sm transition" id="card_check_extinguisher">
               <label class="flex items-start space-x-3 cursor-pointer">
                 <input type="checkbox" id="check_extinguisher" checked onchange="handleIndicatorChange()" class="w-5 h-5 mt-0.5 text-brand-600 rounded border-slate-300">
                 <div class="flex-1">
@@ -462,12 +479,13 @@
                     <span class="font-bold text-sm text-slate-800">滅火器</span>
                     <span id="badge_check_extinguisher" class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">符合</span>
                   </div>
-                  <p class="text-xs text-slate-500 mt-1">在有效期限內、指針在綠色正常壓力範圍。</p>
+                  <p class="text-xs text-slate-500 mt-1">有效期限內、指針在有效綠色壓力範圍內。</p>
                 </div>
               </label>
             </div>
 
-            <div class="p-3.5 rounded-xl border border-slate-200 bg-white" id="card_check_door">
+            <!-- 2. 車門 / 安全門 -->
+            <div class="p-3.5 rounded-xl border border-slate-200 bg-white hover:shadow-sm transition" id="card_check_door">
               <label class="flex items-start space-x-3 cursor-pointer">
                 <input type="checkbox" id="check_door" checked onchange="handleIndicatorChange()" class="w-5 h-5 mt-0.5 text-brand-600 rounded border-slate-300">
                 <div class="flex-1">
@@ -475,12 +493,13 @@
                     <span class="font-bold text-sm text-slate-800">車門 / 安全門</span>
                     <span id="badge_check_door" class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">符合</span>
                   </div>
-                  <p class="text-xs text-slate-500 mt-1">出入門開啟防夾正常、安全門無上鎖障礙。</p>
+                  <p class="text-xs text-slate-500 mt-1">開啟防夾正常、緊急逃生安全門無障礙開關暢通。</p>
                 </div>
               </label>
             </div>
 
-            <div class="p-3.5 rounded-xl border border-slate-200 bg-white" id="card_check_alarm">
+            <!-- 3. 警報裝置 -->
+            <div class="p-3.5 rounded-xl border border-slate-200 bg-white hover:shadow-sm transition" id="card_check_alarm">
               <label class="flex items-start space-x-3 cursor-pointer">
                 <input type="checkbox" id="check_alarm" checked onchange="handleIndicatorChange()" class="w-5 h-5 mt-0.5 text-brand-600 rounded border-slate-300">
                 <div class="flex-1">
@@ -488,25 +507,13 @@
                     <span class="font-bold text-sm text-slate-800">警報裝置</span>
                     <span id="badge_check_alarm" class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">符合</span>
                   </div>
-                  <p class="text-xs text-slate-500 mt-1">倒車警報與安全門蜂鳴警報功能運作正常。</p>
+                  <p class="text-xs text-slate-500 mt-1">倒車警報與安全門連動警報蜂鳴器功能正常。</p>
                 </div>
               </label>
             </div>
 
-            <div class="p-3.5 rounded-xl border border-slate-200 bg-white" id="card_check_permit">
-              <label class="flex items-start space-x-3 cursor-pointer">
-                <input type="checkbox" id="check_permit" checked onchange="handleIndicatorChange()" class="w-5 h-5 mt-0.5 text-brand-600 rounded border-slate-300">
-                <div class="flex-1">
-                  <div class="flex items-center justify-between">
-                    <span class="font-bold text-sm text-slate-800">合格標章</span>
-                    <span id="badge_check_permit" class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">符合</span>
-                  </div>
-                  <p class="text-xs text-slate-500 mt-1">依規定張貼新北市標章且仍在核准效期內。</p>
-                </div>
-              </label>
-            </div>
-
-            <div class="p-3.5 rounded-xl border border-slate-200 bg-white" id="card_check_dashcam">
+            <!-- 4. 行車紀錄器 (說明調整為：需有車外前後左右及車內畫面) -->
+            <div class="p-3.5 rounded-xl border border-slate-200 bg-white hover:shadow-sm transition" id="card_check_dashcam">
               <label class="flex items-start space-x-3 cursor-pointer">
                 <input type="checkbox" id="check_dashcam" checked onchange="handleIndicatorChange()" class="w-5 h-5 mt-0.5 text-brand-600 rounded border-slate-300">
                 <div class="flex-1">
@@ -514,31 +521,31 @@
                     <span class="font-bold text-sm text-slate-800">行車紀錄器</span>
                     <span id="badge_check_dashcam" class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800">符合</span>
                   </div>
-                  <p class="text-xs text-slate-500 mt-1">具備多鏡頭同步錄影、時間戳記正確。</p>
+                  <p class="text-xs text-slate-500 mt-1 font-semibold text-brand-800">需有車外前後左右及車內畫面。</p>
                 </div>
               </label>
             </div>
           </div>
         </div>
 
-        <!-- 區塊四：違規情形綜合判定 -->
+        <!-- 區塊四：違規情形綜合判定 (同步移除反光標誌與標章違規選項) -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="bg-gradient-to-r from-brand-50 to-slate-50 border-b border-slate-200 px-3.5 py-3 sm:px-6 flex items-center justify-between gap-2">
             <h3 class="text-xs sm:text-base font-bold text-brand-900 flex items-center space-x-2 min-w-0 flex-1 mr-2">
               <span class="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs flex-shrink-0">4</span>
               <span class="truncate">違規情形綜合判定</span>
             </h3>
-            <span id="overallComplianceBadge" class="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200">
+            <span id="overallComplianceBadge" class="text-[10px] sm:text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200 whitespace-nowrap flex-shrink-0">
               檢驗判定：全項合格
             </span>
           </div>
 
           <div class="p-4 sm:p-6 space-y-4">
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2.5">
-              <label class="flex items-center p-2 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
-                <input type="checkbox" name="violations" value="反光標誌" id="viol_reflector" onchange="syncViolationToChecks()" class="w-4 h-4 text-rose-600 rounded border-slate-300">
-                <span class="ml-2 text-xs sm:text-sm text-slate-700">反光標誌異常</span>
-              </label>
+            <p class="text-xs sm:text-sm text-slate-600">
+              系統已自動根據上述查驗、超載情形與駕照種類勾稽違規項目；稽查人員亦可手動增列：
+            </p>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5">
               <label class="flex items-center p-2 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
                 <input type="checkbox" name="violations" value="滅火器異常" id="viol_extinguisher" onchange="syncViolationToChecks()" class="w-4 h-4 text-rose-600 rounded border-slate-300">
                 <span class="ml-2 text-xs sm:text-sm text-slate-700">滅火器異常</span>
@@ -556,10 +563,6 @@
                 <span class="ml-2 text-xs sm:text-sm text-slate-700">車門/安全門異常</span>
               </label>
               <label class="flex items-center p-2 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
-                <input type="checkbox" name="violations" value="標章逾期/未貼" id="viol_permit" onchange="syncViolationToChecks()" class="w-4 h-4 text-rose-600 rounded border-slate-300">
-                <span class="ml-2 text-xs sm:text-sm text-slate-700">標章逾期/未貼</span>
-              </label>
-              <label class="flex items-center p-2 rounded-lg border border-slate-200 bg-slate-50 cursor-pointer">
                 <input type="checkbox" name="violations" value="行車紀錄器異常" id="viol_dashcam" onchange="syncViolationToChecks()" class="w-4 h-4 text-rose-600 rounded border-slate-300">
                 <span class="ml-2 text-xs sm:text-sm text-slate-700">行車紀錄器異常</span>
               </label>
@@ -571,9 +574,9 @@
 
             <div>
               <label for="insp_remarks" class="block text-xs sm:text-sm font-semibold text-slate-700 mb-1">
-                現場處分與詳細說明
+                現場處分與詳細說明 (選填)
               </label>
-              <textarea id="insp_remarks" rows="2" placeholder="備註或限期改善說明..." class="w-full text-xs sm:text-sm rounded-lg border-slate-300 px-3 py-2 border bg-white"></textarea>
+              <textarea id="insp_remarks" rows="2" placeholder="備註說明、處分依據或限期改善說明..." class="w-full text-xs sm:text-sm rounded-lg border-slate-300 px-3 py-2 border bg-white"></textarea>
             </div>
           </div>
         </div>
@@ -856,11 +859,156 @@
     </div>
   </div>
 
+  <!-- 用於產生 PDF 的隱藏 DOM 容器 (反光標誌與標章固定為免檢) -->
+  <div id="pdfPrintContainer" style="position: fixed; left: -9999px; top: 0; width: 820px; z-index: -9999; background: #ffffff; pointer-events: none; opacity: 1; visibility: visible;">
+    <div id="singleInspectionPdfTemplate" style="width: 794px; padding: 25px 30px; font-family: 'Noto Sans TC', sans-serif; color: #1e293b; background: #ffffff; box-sizing: border-box; display: block !important;">
+      <div style="text-align: center; border-bottom: 2px solid #0358a1; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="font-size: 14px; color: #475569; letter-spacing: 2px;">新北市政府教育局 聯合稽查專責紀錄表</div>
+        <div style="font-size: 22px; font-weight: bold; color: #074b83; margin: 4px 0;">新北市國高中學生交通車聯合稽查紀錄表</div>
+        <div style="font-size: 11px; color: #64748b;">依據教育部《學生交通車管理辦法》及《道路交通管理處罰條例》執行查核</div>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px;">
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 15%; padding: 6px 8px;">受檢學校</td>
+          <td id="pdf_school" style="border: 1px solid #cbd5e1; width: 35%; padding: 6px 8px;">-</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 15%; padding: 6px 8px;">稽查時間</td>
+          <td id="pdf_time" style="border: 1px solid #cbd5e1; width: 35%; padding: 6px 8px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">稽查地點</td>
+          <td id="pdf_location" colspan="3" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">稽查人員</td>
+          <td id="pdf_inspectors" colspan="3" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+      </table>
+
+      <div style="font-size: 13px; font-weight: bold; color: #074b83; margin-bottom: 6px;">【車輛現況與駕駛人員資料】</div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 14px;">
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 18%; padding: 6px 8px;">單位名稱 (業者)</td>
+          <td id="pdf_operator" style="border: 1px solid #cbd5e1; width: 32%; padding: 6px 8px;">-</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 18%; padding: 6px 8px;">車種</td>
+          <td id="pdf_vehicle_type" style="border: 1px solid #cbd5e1; width: 32%; padding: 6px 8px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">車號</td>
+          <td id="pdf_plate" style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px 8px;">-</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">行照發照日期</td>
+          <td id="pdf_license_date" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">座椅類型</td>
+          <td id="pdf_seat_type" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">載運人數查驗</td>
+          <td id="pdf_passengers" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">駕駛員姓名</td>
+          <td id="pdf_driver_name" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">身分證號碼</td>
+          <td id="pdf_driver_id" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">駕照種類</td>
+          <td id="pdf_license_type" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">隨車人員配置</td>
+          <td id="pdf_escort" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+      </table>
+
+      <!-- 6大指標項目表 (反光標誌與合格標章呈現「免檢」) -->
+      <div style="font-size: 13px; font-weight: bold; color: #074b83; margin-bottom: 6px;">【各項指標查驗結果】</div>
+      <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-bottom: 14px;">
+        <tr style="background: #e2e8f0; font-weight: bold; text-align: center;">
+          <th style="border: 1px solid #cbd5e1; padding: 6px; width: 6%;">項次</th>
+          <th style="border: 1px solid #cbd5e1; padding: 6px; width: 22%;">查驗項目</th>
+          <th style="border: 1px solid #cbd5e1; padding: 6px; width: 16%;">查驗結果</th>
+          <th style="border: 1px solid #cbd5e1; padding: 6px;">法規標準要求與備註說明</th>
+        </tr>
+        <tr style="background: #f8fafc; color: #64748b;">
+          <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">1</td>
+          <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">反光標誌</td>
+          <td style="border: 1px solid #cbd5e1; text-align: center; font-weight: bold; padding: 6px; color: #475569;">免檢</td>
+          <td style="border: 1px solid #cbd5e1; padding: 6px;">依現場稽查標準作業規範列為免檢項目</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">2</td>
+          <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">滅火器</td>
+          <td id="pdf_chk_extinguisher" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td style="border: 1px solid #cbd5e1; padding: 6px;">有效期限內，指針位於綠色正常壓力區，車內固定牢靠</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">3</td>
+          <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">車門 / 安全門</td>
+          <td id="pdf_chk_door" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td style="border: 1px solid #cbd5e1; padding: 6px;">出入門開啟防夾正常；安全門通暢無鎖死且開關正常</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">4</td>
+          <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">警報裝置</td>
+          <td id="pdf_chk_alarm" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td style="border: 1px solid #cbd5e1; padding: 6px;">倒車警告聲響及安全門連動警報蜂鳴器功能正常</td>
+        </tr>
+        <tr style="background: #f8fafc; color: #64748b;">
+          <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">5</td>
+          <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">合格標章</td>
+          <td style="border: 1px solid #cbd5e1; text-align: center; font-weight: bold; padding: 6px; color: #475569;">免檢</td>
+          <td style="border: 1px solid #cbd5e1; padding: 6px;">依現場稽查標準作業規範列為免檢項目</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">6</td>
+          <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">行車紀錄器</td>
+          <td id="pdf_chk_dashcam" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td style="border: 1px solid #cbd5e1; padding: 6px; font-weight: bold;">需有車外前後左右及車內畫面，時間格式準確</td>
+        </tr>
+      </table>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 18%; padding: 6px 8px;">綜合稽查結果</td>
+          <td id="pdf_result_status" style="border: 1px solid #cbd5e1; width: 32%; font-weight: bold; padding: 6px 8px; color: #047857;">全項合格</td>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 18%; padding: 6px 8px;">違規項目記載</td>
+          <td id="pdf_violations_list" style="border: 1px solid #cbd5e1; width: 32%; padding: 6px 8px;">無</td>
+        </tr>
+        <tr>
+          <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; padding: 6px 8px;">處分與改善說明</td>
+          <td id="pdf_remarks" colspan="3" style="border: 1px solid #cbd5e1; padding: 6px 8px;">-</td>
+        </tr>
+      </table>
+
+      <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px;">
+        <tr>
+          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #334155;">教育局代表簽章：</div>
+            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（簽名或蓋章）</div>
+          </td>
+          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #334155;">監理單位代表簽章：</div>
+            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（簽名或蓋章）</div>
+          </td>
+          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #334155;">警察局代表簽章：</div>
+            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（簽名或蓋章）</div>
+          </td>
+          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #334155;">受檢駕駛人簽收：</div>
+            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（本人簽名）</div>
+          </td>
+        </tr>
+      </table>
+      <div style="text-align: right; font-size: 10px; color: #64748b; margin-top: 10px;">
+        新北市政府教育局 聯合稽查平台自動產製 | 列印時間：<span id="pdf_gen_timestamp"></span>
+      </div>
+    </div>
+  </div>
+
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none max-w-sm w-full"></div>
 
-  <!-- JavaScript 核心功能腳本 -->
+  <!-- JavaScript 核心邏輯 -->
   <script>
-    // 預設資料全數清空為空陣列（[]），後台有資料才呈現
     const DEFAULT_INSPECTIONS = [];
     const DEFAULT_SCHOOL_FLEET = [];
     const DEFAULT_ACCIDENTS = [];
@@ -944,6 +1092,28 @@
       document.getElementById('btnAddSchool')?.classList.toggle('hidden', !isManagerMode);
       renderSchoolFleetTable();
       showToast(isManagerMode ? "已啟用管理模式" : "已切換為檢視模式", "success");
+    }
+
+    // 處理業者下拉與自訂文字框
+    function handleOperatorSelectChange() {
+      const select = document.getElementById('insp_operator');
+      const wrapper = document.getElementById('customOperatorWrapper');
+      const customInput = document.getElementById('insp_operator_custom');
+      if (!select || !wrapper) return;
+
+      if (select.value === '其他通運業者') {
+        wrapper.classList.remove('hidden');
+        if (customInput) customInput.focus();
+      } else {
+        wrapper.classList.add('hidden');
+      }
+    }
+
+    function openLocationQuickSelect() {
+      const loc = prompt("請輸入或修改稽查地點（常用如：文化路一段與民權路交叉路口）", document.getElementById('insp_location').value);
+      if (loc !== null && loc.trim() !== "") {
+        document.getElementById('insp_location').value = loc.trim();
+      }
     }
 
     function openCloudSyncModal() {
@@ -1060,7 +1230,10 @@
           <td class="py-2.5 px-3 font-mono font-bold">${item.plate || '-'}</td>
           <td class="py-2.5 px-3">${item.actual_passengers || 0} / ${item.limit_passengers || 0} 人</td>
           <td class="py-2.5 px-3">${item.violations?.length > 0 ? '<span class="text-rose-600 font-bold">違規</span>' : '<span class="text-emerald-600 font-bold">合格</span>'}</td>
-          <td class="py-2.5 px-3 text-right"><button onclick="deleteInspectionItem('${item.id}')" class="text-xs text-rose-500 hover:underline">刪除</button></td>
+          <td class="py-2.5 px-3 text-right">
+            <button onclick="downloadRecordAsPDF('${item.id}')" class="text-xs text-brand-600 hover:underline mr-2">PDF</button>
+            <button onclick="deleteInspectionItem('${item.id}')" class="text-xs text-rose-500 hover:underline">刪除</button>
+          </td>
         </tr>
       `).join('');
     }
@@ -1114,23 +1287,111 @@
 
     function checkOverloadStatus() {
       const limit = parseInt(document.getElementById('insp_limit_passengers')?.value || '0', 10);
-      const actual = parseInt(document.getElementById('insp_actual_passengers')?.value || '0', 10);
-      document.getElementById('overloadWarning')?.classList.toggle('hidden', actual <= limit);
+      const actualInput = document.getElementById('insp_actual_passengers')?.value;
+      const actual = actualInput ? parseInt(actualInput, 10) : 0;
+      const isOver = (actual > limit && limit > 0);
+      document.getElementById('overloadWarning')?.classList.toggle('hidden', !isOver);
+      const violOverload = document.getElementById('viol_overload');
+      if (violOverload) violOverload.checked = isOver;
+      updateOverallComplianceBadge();
     }
 
     function checkDriverLicenseStatus() {
       const type = document.querySelector('input[name="license_type"]:checked')?.value;
-      document.getElementById('licenseWarning')?.classList.toggle('hidden', type !== '普通');
+      const isNormal = (type === '普通');
+      document.getElementById('licenseWarning')?.classList.toggle('hidden', !isNormal);
+      const violLicense = document.getElementById('viol_license');
+      if (violLicense) violLicense.checked = isNormal;
+      updateOverallComplianceBadge();
     }
 
-    function handleIndicatorChange() {}
-    function syncViolationToChecks() {}
-    function toggleEscortInput() {}
+    function handleIndicatorChange() {
+      const map = [
+        { chk: 'check_extinguisher', viol: 'viol_extinguisher', card: 'card_check_extinguisher', badge: 'badge_check_extinguisher' },
+        { chk: 'check_door', viol: 'viol_door', card: 'card_check_door', badge: 'badge_check_door' },
+        { chk: 'check_alarm', viol: 'viol_alarm', card: 'card_check_alarm', badge: 'badge_check_alarm' },
+        { chk: 'check_dashcam', viol: 'viol_dashcam', card: 'card_check_dashcam', badge: 'badge_check_dashcam' }
+      ];
+
+      map.forEach(item => {
+        const c = document.getElementById(item.chk);
+        const v = document.getElementById(item.viol);
+        const card = document.getElementById(item.card);
+        const badge = document.getElementById(item.badge);
+
+        if (c && c.checked) {
+          if (v) v.checked = false;
+          if (card) {
+            card.classList.remove('border-rose-300', 'bg-rose-50/40');
+            card.classList.add('border-slate-200', 'bg-white');
+          }
+          if (badge) {
+            badge.className = 'text-[11px] px-2 py-0.5 rounded-full font-medium bg-emerald-100 text-emerald-800';
+            badge.textContent = '符合';
+          }
+        } else {
+          if (v) v.checked = true;
+          if (card) {
+            card.classList.remove('border-slate-200', 'bg-white');
+            card.classList.add('border-rose-300', 'bg-rose-50/40');
+          }
+          if (badge) {
+            badge.className = 'text-[11px] px-2 py-0.5 rounded-full font-medium bg-rose-100 text-rose-800';
+            badge.textContent = '未符規定';
+          }
+        }
+      });
+      updateOverallComplianceBadge();
+    }
+
+    function syncViolationToChecks() {
+      const map = [
+        { viol: 'viol_extinguisher', chk: 'check_extinguisher' },
+        { viol: 'viol_door', chk: 'check_door' },
+        { viol: 'viol_alarm', chk: 'check_alarm' },
+        { viol: 'viol_dashcam', chk: 'check_dashcam' }
+      ];
+      map.forEach(item => {
+        const v = document.getElementById(item.viol);
+        const c = document.getElementById(item.chk);
+        if (v && c) c.checked = !v.checked;
+      });
+      handleIndicatorChange();
+    }
+
+    function updateOverallComplianceBadge() {
+      const badge = document.getElementById('overallComplianceBadge');
+      if (!badge) return;
+      const count = document.querySelectorAll('input[name="violations"]:checked').length;
+      if (count === 0) {
+        badge.className = 'text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-100 text-emerald-800 border border-emerald-200';
+        badge.innerHTML = '檢驗判定：全項合格';
+      } else {
+        badge.className = 'text-xs px-2.5 py-0.5 rounded-full font-semibold bg-rose-100 text-rose-800 border border-rose-200';
+        badge.innerHTML = `檢驗判定：違規異常 (${count} 項)`;
+      }
+    }
+
+    function toggleEscortInput() {
+      const sel = document.getElementById('insp_escort_status');
+      const input = document.getElementById('insp_escort_name');
+      if (sel && input) {
+        if (sel.value === '未配置') {
+          input.value = '無隨車人員';
+          input.disabled = true;
+        } else {
+          input.disabled = false;
+          if (input.value === '無隨車人員') input.value = '';
+        }
+      }
+    }
+
     function selectAllChecks(val) {
-      ['check_reflector', 'check_extinguisher', 'check_door', 'check_alarm', 'check_permit', 'check_dashcam'].forEach(id => {
+      ['check_extinguisher', 'check_door', 'check_alarm', 'check_dashcam'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.checked = val;
       });
+      handleIndicatorChange();
     }
 
     function exportDataToCSV() {
@@ -1149,16 +1410,52 @@
       e.preventDefault();
       const school = document.getElementById('insp_school').value.trim();
       const plate = document.getElementById('insp_plate').value.trim().toUpperCase();
+
+      const opSelect = document.getElementById('insp_operator');
+      let operator = opSelect.value;
+      if (operator === '其他通運業者') {
+        operator = document.getElementById('insp_operator_custom').value.trim();
+      }
+      if (!operator) {
+        showToast("請選擇或填寫通運/客運業者！", "error");
+        return;
+      }
+
+      const actualInput = document.getElementById('insp_actual_passengers')?.value;
+      const actual_passengers = actualInput ? parseInt(actualInput, 10) : 0;
+      const limit_passengers = parseInt(document.getElementById('insp_limit_passengers').value || '0', 10);
+
+      const violations = [];
+      document.querySelectorAll('input[name="violations"]:checked').forEach(c => violations.push(c.value));
+
       const item = {
         id: "INSP-" + Date.now().toString().slice(-6),
         datetime: document.getElementById('insp_datetime').value,
+        formattedTime: document.getElementById('insp_datetime').value.replace('T', ' '),
         school: school,
-        operator: document.getElementById('insp_operator').value.trim(),
+        location: document.getElementById('insp_location').value.trim(),
+        operator: operator,
+        vehicle_type: document.getElementById('insp_vehicle_type').value,
         plate: plate,
-        actual_passengers: parseInt(document.getElementById('insp_actual_passengers').value || '0', 10),
-        limit_passengers: parseInt(document.getElementById('insp_limit_passengers').value || '0', 10),
-        violations: []
+        license_date: document.getElementById('insp_license_date').value,
+        seat_type: document.querySelector('input[name="seat_type"]:checked')?.value || '非字',
+        actual_passengers: actual_passengers,
+        limit_passengers: limit_passengers,
+        driver_name: document.getElementById('insp_driver_name').value.trim(),
+        driver_id: document.getElementById('insp_driver_id').value.trim(),
+        license_type: document.querySelector('input[name="license_type"]:checked')?.value || '職業',
+        escort_status: document.getElementById('insp_escort_status').value,
+        escort_name: document.getElementById('insp_escort_name').value.trim() || '無',
+        checks: {
+          extinguisher: document.getElementById('check_extinguisher').checked,
+          door: document.getElementById('check_door').checked,
+          alarm: document.getElementById('check_alarm').checked,
+          dashcam: document.getElementById('check_dashcam').checked
+        },
+        violations: violations,
+        remarks: document.getElementById('insp_remarks').value.trim()
       };
+
       inspectionsData.unshift(item);
       safeSetStorage('ntpc_inspections', inspectionsData);
       renderRecentInspectionsTable();
@@ -1168,18 +1465,116 @@
 
     function loadSampleInspectionData() {
       document.getElementById('insp_school').value = '新北市立板橋高級中學';
-      document.getElementById('insp_operator').value = '台北客運';
+      document.getElementById('insp_operator').value = '台北汽車客運股份有限公司';
+      handleOperatorSelectChange();
       document.getElementById('insp_plate').value = 'KKA-8921';
+      document.getElementById('insp_license_date').value = '2021-08-15';
       document.getElementById('insp_limit_passengers').value = 43;
       document.getElementById('insp_actual_passengers').value = 38;
       document.getElementById('insp_driver_name').value = '張先生';
       document.getElementById('insp_driver_id').value = 'F123456789';
+      document.getElementById('insp_location').value = '文化路一段與民權路交叉路口';
       setNowInspectionTime();
+      selectAllChecks(true);
     }
 
     function resetInspectionForm() {
       document.getElementById('inspectionForm').reset();
+      handleOperatorSelectChange();
       setNowInspectionTime();
+      selectAllChecks(true);
+      showToast("表單已重置", "info");
+    }
+
+    function populatePdfTemplateData(data) {
+      document.getElementById('pdf_school').textContent = data.school || '-';
+      document.getElementById('pdf_time').textContent = data.formattedTime || data.datetime || '-';
+      document.getElementById('pdf_location').textContent = data.location || '-';
+      document.getElementById('pdf_inspectors').textContent = '新北市教育局、公路局監理所、警察局聯合小組';
+      document.getElementById('pdf_operator').textContent = data.operator || '-';
+      document.getElementById('pdf_vehicle_type').textContent = data.vehicle_type || '校車';
+      document.getElementById('pdf_plate').textContent = data.plate || '-';
+      document.getElementById('pdf_license_date').textContent = data.license_date || '-';
+      document.getElementById('pdf_seat_type').textContent = (data.seat_type || '非字') + '型座椅';
+      document.getElementById('pdf_passengers').textContent = `法定限載：${data.limit_passengers}人，實載：${data.actual_passengers}人`;
+      document.getElementById('pdf_driver_name').textContent = data.driver_name || '-';
+      document.getElementById('pdf_driver_id').textContent = data.driver_id || '-';
+      document.getElementById('pdf_license_type').textContent = (data.license_type || '職業') + '駕照';
+      document.getElementById('pdf_escort').textContent = `${data.escort_status} (${data.escort_name})`;
+
+      const chk = data.checks || {};
+      document.getElementById('pdf_chk_extinguisher').textContent = chk.extinguisher ? '☑ 合格' : '☒ 不合格';
+      document.getElementById('pdf_chk_door').textContent = chk.door ? '☑ 合格' : '☒ 不合格';
+      document.getElementById('pdf_chk_alarm').textContent = chk.alarm ? '☑ 合格' : '☒ 不合格';
+      document.getElementById('pdf_chk_dashcam').textContent = chk.dashcam ? '☑ 合格' : '☒ 不合格';
+
+      const isCompliant = (!data.violations || data.violations.length === 0);
+      const resStatusEl = document.getElementById('pdf_result_status');
+      if (resStatusEl) {
+        resStatusEl.textContent = isCompliant ? '全項合格' : '違規列管改善';
+        resStatusEl.style.color = isCompliant ? '#047857' : '#e11d48';
+      }
+      document.getElementById('pdf_violations_list').textContent = isCompliant ? '無任何違規' : data.violations.join('、');
+      document.getElementById('pdf_remarks').textContent = data.remarks || '現場查驗完畢。';
+      document.getElementById('pdf_gen_timestamp').textContent = new Date().toLocaleString('zh-TW');
+    }
+
+    function previewAndDownloadCurrentPDF() {
+      const opSelect = document.getElementById('insp_operator');
+      let op = opSelect.value;
+      if (op === '其他通運業者') op = document.getElementById('insp_operator_custom').value.trim();
+
+      const current = {
+        school: document.getElementById('insp_school').value || '未填寫學校',
+        formattedTime: document.getElementById('insp_datetime').value.replace('T', ' '),
+        location: document.getElementById('insp_location').value || '現場指定路口',
+        operator: op || '未填寫業者',
+        vehicle_type: document.getElementById('insp_vehicle_type').value,
+        plate: document.getElementById('insp_plate').value.toUpperCase() || 'ABC-0000',
+        license_date: document.getElementById('insp_license_date').value || '2022-01-01',
+        seat_type: document.querySelector('input[name="seat_type"]:checked')?.value || '非字',
+        limit_passengers: document.getElementById('insp_limit_passengers').value || 43,
+        actual_passengers: document.getElementById('insp_actual_passengers').value || 0,
+        driver_name: document.getElementById('insp_driver_name').value || '駕駛員',
+        driver_id: document.getElementById('insp_driver_id').value || 'F123***789',
+        license_type: document.querySelector('input[name="license_type"]:checked')?.value || '職業',
+        escort_status: document.getElementById('insp_escort_status').value,
+        escort_name: document.getElementById('insp_escort_name').value || '無',
+        checks: {
+          extinguisher: document.getElementById('check_extinguisher').checked,
+          door: document.getElementById('check_door').checked,
+          alarm: document.getElementById('check_alarm').checked,
+          dashcam: document.getElementById('check_dashcam').checked
+        },
+        violations: Array.from(document.querySelectorAll('input[name="violations"]:checked')).map(c => c.value),
+        remarks: document.getElementById('insp_remarks').value || '查驗完畢'
+      };
+
+      populatePdfTemplateData(current);
+      showToast("正在產製 PDF 稽查紀錄單...", "info");
+
+      const element = document.getElementById('singleInspectionPdfTemplate');
+      html2pdf().set({
+        margin: [6, 6, 6, 6],
+        filename: `學生交通車聯合稽查紀錄表_${current.plate}_${current.school}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(element).save();
+    }
+
+    function downloadRecordAsPDF(id) {
+      const rec = inspectionsData.find(x => x.id === id);
+      if (!rec) return;
+      populatePdfTemplateData(rec);
+      const element = document.getElementById('singleInspectionPdfTemplate');
+      html2pdf().set({
+        margin: [6, 6, 6, 6],
+        filename: `學生交通車聯合稽查紀錄表_${rec.plate || '車號'}_${rec.school}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      }).from(element).save();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -1188,6 +1583,7 @@
       renderRecentInspectionsTable();
       renderDashboard();
       renderRegulationsList();
+      handleOperatorSelectChange();
     });
   </script>
 </body>
