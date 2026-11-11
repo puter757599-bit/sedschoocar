@@ -221,6 +221,7 @@
                 <option value="欣欣大眾汽車客運股份有限公司">欣欣大眾汽車客運股份有限公司</option>
                 <option value="新北通運有限公司">新北通運有限公司</option>
                 <option value="統聯通運股份有限公司">統聯通運股份有限公司</option>
+                <option value="學校自購專車">學校自購專車 (校有公車)</option>
                 <option value="其他通運業者">其他 (自行輸入業者名稱...)</option>
               </select>
             </div>
@@ -370,7 +371,7 @@
           </div>
         </div>
 
-        <!-- 區塊五：現場聯合稽查人員簽名/核章 (新增：教育局、監理所、警察局) -->
+        <!-- 區塊五：現場聯合稽查人員簽名/核章 -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="bg-gradient-to-r from-brand-50 to-slate-50 border-b border-slate-200 px-4 py-3 flex items-center justify-between">
             <h3 class="text-sm sm:text-base font-bold text-brand-900 flex items-center space-x-2">
@@ -381,7 +382,6 @@
           </div>
 
           <div class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
-            <!-- 1. 教育局代表簽名 -->
             <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-800 flex items-center">
@@ -393,7 +393,6 @@
               <input type="text" id="signerNameEdu" placeholder="請填寫簽章人姓名 (如：王科員)" class="w-full text-xs rounded border-slate-300 px-2 py-1.5 border bg-white">
             </div>
 
-            <!-- 2. 監理所代表簽名 -->
             <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-800 flex items-center">
@@ -405,7 +404,6 @@
               <input type="text" id="signerNameSupervisor" placeholder="請填寫簽章人姓名 (如：陳專員)" class="w-full text-xs rounded border-slate-300 px-2 py-1.5 border bg-white">
             </div>
 
-            <!-- 3. 警察局代表簽名 -->
             <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
               <div class="flex items-center justify-between">
                 <span class="text-xs font-bold text-slate-800 flex items-center">
@@ -419,7 +417,7 @@
           </div>
         </div>
 
-        <!-- 儲存與下載操作按鈕列 (恢復雙按鈕並列) -->
+        <!-- 儲存與下載操作按鈕列 -->
         <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
           <button type="button" onclick="previewAndDownloadCurrentPDF()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-medium text-sm shadow transition flex items-center justify-center space-x-2">
             <i class="fa-solid fa-file-pdf text-rose-400"></i>
@@ -433,29 +431,142 @@
       </form>
     </section>
 
-    <!-- 分頁 2: 數據儀表板 -->
+    <!-- ======================================================== -->
+    <!-- 分頁 2: 數據儀表板 (新增指定全部專項統計) -->
+    <!-- ======================================================== -->
     <section id="tab-dashboard" class="space-y-6 hidden">
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-5">
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+      
+      <!-- 頂部重點指標卡片 (總稽查次數、受檢車輛數、備查統計、租賃自購) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- 1. 總稽查次數 -->
+        <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
           <div class="w-12 h-12 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl flex-shrink-0">
-            <i class="fa-solid fa-clipboard-list"></i>
+            <i class="fa-solid fa-clipboard-check"></i>
           </div>
           <div>
-            <div class="text-xs font-medium text-slate-500">總稽查次數</div>
-            <div class="text-xl font-bold text-slate-800" id="kpi_total_inspections">0</div>
+            <div class="text-xs font-semibold text-slate-500">總稽查次數</div>
+            <div class="text-2xl font-bold text-slate-800 mt-0.5" id="dash_total_inspections">0 次</div>
+            <div class="text-[11px] text-emerald-600 font-medium">新北聯合稽查小組</div>
           </div>
         </div>
 
-        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
+        <!-- 2. 受檢車輛數 -->
+        <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
           <div class="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-xl flex-shrink-0">
             <i class="fa-solid fa-bus"></i>
           </div>
           <div>
-            <div class="text-xs font-medium text-slate-500">受檢車輛數</div>
-            <div class="text-xl font-bold text-slate-800" id="kpi_total_vehicles">0</div>
+            <div class="text-xs font-semibold text-slate-500">受檢車輛數 (不重複)</div>
+            <div class="text-2xl font-bold text-slate-800 mt-0.5" id="dash_total_vehicles">0 輛</div>
+            <div class="text-[11px] text-sky-600 font-medium">依車號實體檢驗統計</div>
+          </div>
+        </div>
+
+        <!-- 3. 交通車備查情形 -->
+        <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500">交通車報局備查情形</span>
+            <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200" id="dash_audit_rate">0%</span>
+          </div>
+          <div class="my-2">
+            <div class="flex items-baseline space-x-2">
+              <span class="text-xl font-bold text-slate-800" id="dash_audit_completed">0</span>
+              <span class="text-xs text-slate-400">/ 應備查校數 <span id="dash_audit_total">0</span> 所</span>
+            </div>
+            <div class="w-full bg-slate-100 rounded-full h-1.5 mt-1.5 overflow-hidden">
+              <div id="dash_audit_bar" class="bg-emerald-500 h-1.5 rounded-full" style="width: 0%"></div>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-500 flex justify-between">
+            <span>已備查：<b class="text-emerald-700" id="dash_audit_yes">0</b> 所</span>
+            <span>未備查：<b class="text-rose-600" id="dash_audit_no">0</b> 所</span>
+          </div>
+        </div>
+
+        <!-- 4. 學校交通車總數 (租賃 vs 自購) -->
+        <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold text-slate-500">學校交通車總數量</span>
+            <span class="text-xs font-bold text-brand-700 bg-brand-50 px-2 py-0.5 rounded" id="dash_fleet_total">0 輛</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 my-2 text-center">
+            <div class="p-1.5 bg-slate-50 rounded border border-slate-100">
+              <span class="text-[10px] text-slate-400 block">通運租賃車</span>
+              <span class="text-base font-bold text-brand-700" id="dash_fleet_rental">0 輛</span>
+            </div>
+            <div class="p-1.5 bg-slate-50 rounded border border-slate-100">
+              <span class="text-[10px] text-slate-400 block">學校自購車</span>
+              <span class="text-base font-bold text-amber-600" id="dash_fleet_owned">0 輛</span>
+            </div>
+          </div>
+          <div class="text-[11px] text-slate-400 text-right">含校車/幼童/身障專車</div>
+        </div>
+      </div>
+
+      <!-- 區塊二：各校受檢次數 (僅列出有被稽查的學校) & 各校受檢違規情形 -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- 各校受檢次數 (只要列出有被稽查的學校及次數) -->
+        <div class="lg:col-span-7 bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center space-x-2">
+                <i class="fa-solid fa-chart-bar text-brand-600"></i>
+                <span>各校受檢次數統計 (僅列出有受檢學校)</span>
+              </h3>
+              <p class="text-xs text-slate-500">實際執行路檢與校門口稽查車次排序</p>
+            </div>
+            <span class="text-xs text-slate-500">共 <b id="dash_active_school_count" class="text-brand-700">0</b> 所受檢</span>
+          </div>
+
+          <div class="relative h-64 sm:h-72 w-full flex items-center justify-center">
+            <div id="dash_school_empty" class="hidden flex flex-col items-center justify-center text-slate-400 space-y-1 py-8">
+              <i class="fa-solid fa-inbox text-3xl text-slate-300"></i>
+              <span class="text-xs">目前尚無受檢學校紀錄（保持淨空）</span>
+            </div>
+            <canvas id="chartSchoolInspections" class="w-full h-full"></canvas>
+          </div>
+
+          <!-- 各校受檢明細膠囊列表 -->
+          <div id="dash_school_badges" class="flex flex-wrap gap-1.5 pt-2 border-t border-slate-100"></div>
+        </div>
+
+        <!-- 各校受檢違規情形及次數 -->
+        <div class="lg:col-span-5 bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div>
+              <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center space-x-2">
+                <i class="fa-solid fa-triangle-exclamation text-rose-600"></i>
+                <span>各校受檢違規情形及次數</span>
+              </h3>
+              <p class="text-xs text-slate-500">按學校彙整開立限改或違規樣態</p>
+            </div>
+            <span class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded">稽查裁處</span>
+          </div>
+
+          <div id="dash_violations_container" class="max-h-80 overflow-y-auto custom-scrollbar space-y-2 pr-1">
+            <!-- 動態渲染各校違規項目與次數 -->
           </div>
         </div>
       </div>
+
+      <!-- 區塊三：各校交通車事故統計 (只要統計有報局備查的學校及事故樣態) -->
+      <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+          <div>
+            <h3 class="font-bold text-sm sm:text-base text-slate-800 flex items-center space-x-2">
+              <i class="fa-solid fa-car-burst text-rose-500"></i>
+              <span>各校交通車事故統計 (僅統計有報局備查之學校與事故樣態)</span>
+            </h3>
+            <p class="text-xs text-slate-500">依教育局校安備查與交通事故通報紀錄統計</p>
+          </div>
+          <span class="text-xs text-slate-500">通報件數：<b id="dash_accident_total_badge" class="text-rose-600">0</b> 件</span>
+        </div>
+
+        <div id="dash_accidents_wrapper" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- 動態呈現事故學校、次數及事故原因樣態 -->
+        </div>
+      </div>
+
     </section>
 
     <!-- 分頁 3: 資料統計及下載 (包含手動新增與 CSV 上傳功能) -->
@@ -483,6 +594,7 @@
           </div>
         </div>
 
+        <!-- 搜尋列與功能操作按鈕列 -->
         <div class="px-4 py-3 sm:px-6 bg-white border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto flex-1 mr-3">
             <div class="relative w-full sm:w-64">
@@ -531,9 +643,7 @@
                 <th class="py-3 px-3.5 text-right">操作</th>
               </tr>
             </thead>
-            <tbody id="schoolFleetTbody" class="divide-y divide-slate-100 bg-white">
-              <!-- 動態渲染 -->
-            </tbody>
+            <tbody id="schoolFleetTbody" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
 
@@ -552,9 +662,7 @@
                 <th class="py-3 px-3.5 text-right">操作</th>
               </tr>
             </thead>
-            <tbody id="contractsTbody" class="divide-y divide-slate-100 bg-white">
-              <!-- 動態渲染 -->
-            </tbody>
+            <tbody id="contractsTbody" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
 
@@ -573,9 +681,7 @@
                 <th class="py-3 px-3.5 text-right">操作</th>
               </tr>
             </thead>
-            <tbody id="accidentsTbody" class="divide-y divide-slate-100 bg-white">
-              <!-- 動態渲染 -->
-            </tbody>
+            <tbody id="accidentsTbody" class="divide-y divide-slate-100 bg-white"></tbody>
           </table>
         </div>
       </div>
@@ -695,37 +801,33 @@
         </tr>
       </table>
 
-      <!-- 聯合簽章欄位 (教育局、監理所、警察局、受檢司機) -->
+      <!-- 聯合簽章欄位 (教育局、監理所、警察局) -->
       <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px;">
         <tr>
-          <!-- 教育局簽章欄 -->
           <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
             <div style="font-weight: bold; color: #074b83;">【教育局代表簽章】</div>
             <div id="pdfSigEduImgContainer" style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-              <span id="pdfSigEduText" style="font-size: 10px; color: #94a3b8;">（未手寫簽章）</span>
+              <span id="pdfSigEduText" style="font-size: 10px; color: #94a3b8;">（已現場核章）</span>
             </div>
             <div id="pdfSignerNameEdu" style="font-size: 11px; font-weight: bold; text-align: center; color: #334155;"></div>
           </td>
 
-          <!-- 監理所簽章欄 -->
           <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
             <div style="font-weight: bold; color: #074b83;">【監理所代表簽章】</div>
             <div id="pdfSigSupervisorImgContainer" style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-              <span id="pdfSigSupervisorText" style="font-size: 10px; color: #94a3b8;">（未手寫簽章）</span>
+              <span id="pdfSigSupervisorText" style="font-size: 10px; color: #94a3b8;">（已現場核章）</span>
             </div>
             <div id="pdfSignerNameSupervisor" style="font-size: 11px; font-weight: bold; text-align: center; color: #334155;"></div>
           </td>
 
-          <!-- 警察局簽章欄 -->
           <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
             <div style="font-weight: bold; color: #074b83;">【警察局代表簽章】</div>
             <div id="pdfSigPoliceImgContainer" style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
-              <span id="pdfSigPoliceText" style="font-size: 10px; color: #94a3b8;">（未手寫簽章）</span>
+              <span id="pdfSigPoliceText" style="font-size: 10px; color: #94a3b8;">（已現場核章）</span>
             </div>
             <div id="pdfSignerNamePolice" style="font-size: 11px; font-weight: bold; text-align: center; color: #334155;"></div>
           </td>
 
-          <!-- 受檢駕駛人欄 -->
           <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
             <div style="font-weight: bold; color: #334155;">【受檢駕駛人簽收】</div>
             <div style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
@@ -768,6 +870,8 @@
     let isManagerMode = safeGetStorage('ntpc_manager_mode', true);
     let currentActiveTab = 'inspection';
     let currentActiveStatsSubtab = 'schools';
+
+    let chartSchoolInspectionsInstance = null;
 
     function showToast(message, type = 'success') {
       const container = document.getElementById('toastContainer');
@@ -953,7 +1057,6 @@
         },
         violations: violations,
         remarks: document.getElementById('insp_remarks').value.trim() || '查核無違規',
-        // 簽章資料
         signatures: {
           eduImg: signaturePads['sigEdu'] ? signaturePads['sigEdu'].toDataURL() : null,
           eduName: document.getElementById('signerNameEdu').value.trim() || '新北市教育局代表',
@@ -991,10 +1094,8 @@
       document.getElementById('pdf_violations_list').textContent = isCompliant ? '無任何違規' : data.violations.join('、');
       document.getElementById('pdf_remarks').textContent = data.remarks || '現場查驗完畢。';
 
-      // 填充三方簽名圖片與姓名
       const sigs = data.signatures || {};
 
-      // 1. 教育局
       const eduBox = document.getElementById('pdfSigEduImgContainer');
       if (sigs.eduImg) {
         eduBox.innerHTML = `<img src="${sigs.eduImg}" style="max-height: 48px; max-width: 90%; object-fit: contain;">`;
@@ -1003,7 +1104,6 @@
       }
       document.getElementById('pdfSignerNameEdu').textContent = sigs.eduName || '教育局代表';
 
-      // 2. 監理所
       const supBox = document.getElementById('pdfSigSupervisorImgContainer');
       if (sigs.supervisorImg) {
         supBox.innerHTML = `<img src="${sigs.supervisorImg}" style="max-height: 48px; max-width: 90%; object-fit: contain;">`;
@@ -1012,7 +1112,6 @@
       }
       document.getElementById('pdfSignerNameSupervisor').textContent = sigs.supervisorName || '監理所代表';
 
-      // 3. 警察局
       const polBox = document.getElementById('pdfSigPoliceImgContainer');
       if (sigs.policeImg) {
         polBox.innerHTML = `<img src="${sigs.policeImg}" style="max-height: 48px; max-width: 90%; object-fit: contain;">`;
@@ -1052,6 +1151,7 @@
 
       showToast("稽查紀錄已儲存！系統正在為您產製下載 PDF 檔...", "success");
       generatePdfFromElement(data);
+      renderDashboard();
     }
 
     // ================= CSV 批次上傳與手動填報管理 =================
@@ -1109,6 +1209,7 @@
         renderSchoolFleetTable();
       }
       showToast(`已成功批次匯入 ${count} 筆資料！`, "success");
+      renderDashboard();
     }
 
     function renderAllStatisticsTables() {
@@ -1146,6 +1247,7 @@
         postToGas('deleteSchoolFleet', { school: name });
         renderSchoolFleetTable();
         showToast("已成功刪除！", "success");
+        renderDashboard();
       }
     }
 
@@ -1171,6 +1273,216 @@
           mode: 'no-cors'
         });
       } catch (e) {}
+    }
+
+    // ========================================================
+    // 數據儀表板核心運算渲染 (完整支援指定 7 大專項統計)
+    // ========================================================
+    function renderDashboard() {
+      // 1. 總稽查次數
+      const totalInspections = inspectionsData.length;
+      document.getElementById('dash_total_inspections').textContent = `${totalInspections} 次`;
+
+      // 2. 受檢車輛數 (依車號不重複計算)
+      const uniquePlates = new Set(inspectionsData.map(x => x.plate).filter(Boolean));
+      document.getElementById('dash_total_vehicles').textContent = `${uniquePlates.size} 輛`;
+
+      // 3. 交通車備查情形 (應備查校數、已備查、未備查)
+      const totalSchools = schoolFleetData.length;
+      const auditedCount = schoolFleetData.filter(x => (x.status === '已備查' || x.status === '有效備查中')).length;
+      const unAuditedCount = totalSchools - auditedCount;
+      const auditRate = totalSchools > 0 ? ((auditedCount / totalSchools) * 100).toFixed(0) : 0;
+
+      document.getElementById('dash_audit_total').textContent = totalSchools;
+      document.getElementById('dash_audit_completed').textContent = auditedCount;
+      document.getElementById('dash_audit_yes').textContent = auditedCount;
+      document.getElementById('dash_audit_no').textContent = unAuditedCount;
+      document.getElementById('dash_audit_rate').textContent = `${auditRate}%`;
+      document.getElementById('dash_audit_bar').style.width = `${auditRate}%`;
+
+      // 4. 學校交通車數量 (租賃 vs 自購)
+      let rentalBuses = 0;
+      let ownedBuses = 0;
+      schoolFleetData.forEach(s => {
+        const busCount = parseInt(s.total || 0);
+        const op = s.operator || '';
+        if (op.includes('自購') || op.includes('學校自購') || op.includes('公車')) {
+          ownedBuses += busCount;
+        } else {
+          rentalBuses += busCount;
+        }
+      });
+      document.getElementById('dash_fleet_total').textContent = `${rentalBuses + ownedBuses} 輛`;
+      document.getElementById('dash_fleet_rental').textContent = `${rentalBuses} 輛`;
+      document.getElementById('dash_fleet_owned').textContent = `${ownedBuses} 輛`;
+
+      // 5. 各校受檢次數 (只要列出有被稽查的學校及次數)
+      const schoolInspectMap = {};
+      const schoolViolMap = {}; // 6. 各校受檢違規情形及次數
+
+      inspectionsData.forEach(item => {
+        const sch = item.school || '未知學校';
+        schoolInspectMap[sch] = (schoolInspectMap[sch] || 0) + 1;
+
+        if (!schoolViolMap[sch]) schoolViolMap[sch] = {};
+        if (Array.isArray(item.violations)) {
+          item.violations.forEach(v => {
+            schoolViolMap[sch][v] = (schoolViolMap[sch][v] || 0) + 1;
+          });
+        }
+      });
+
+      const activeSchools = Object.keys(schoolInspectMap);
+      document.getElementById('dash_active_school_count').textContent = activeSchools.length;
+
+      const chartEmptyEl = document.getElementById('dash_school_empty');
+      const chartCanvasEl = document.getElementById('chartSchoolInspections');
+      const badgesContainer = document.getElementById('dash_school_badges');
+
+      if (activeSchools.length === 0) {
+        chartEmptyEl.classList.remove('hidden');
+        chartCanvasEl.classList.add('hidden');
+        badgesContainer.innerHTML = '';
+        if (chartSchoolInspectionsInstance) {
+          chartSchoolInspectionsInstance.destroy();
+          chartSchoolInspectionsInstance = null;
+        }
+      } else {
+        chartEmptyEl.classList.add('hidden');
+        chartCanvasEl.classList.remove('hidden');
+
+        // 渲染膠囊
+        badgesContainer.innerHTML = activeSchools.map(sch => `
+          <span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-50 text-brand-900 border border-brand-200">
+            ${sch}：<b class="ml-1 text-brand-700">${schoolInspectMap[sch]} 次</b>
+          </span>
+        `).join('');
+
+        // 圖表繪製
+        const labels = activeSchools.map(s => s.replace('新北市立', '').replace('新北市私立', ''));
+        const dataVals = activeSchools.map(s => schoolInspectMap[s]);
+
+        if (chartSchoolInspectionsInstance) chartSchoolInspectionsInstance.destroy();
+
+        const ctx = chartCanvasEl.getContext('2d');
+        chartSchoolInspectionsInstance = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: '受檢稽查次數',
+              data: dataVals,
+              backgroundColor: '#0284c7',
+              borderRadius: 6,
+              barPercentage: labels.length === 1 ? 0.35 : 0.6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false }
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: { stepSize: 1, font: { size: 10 } }
+              },
+              x: {
+                ticks: { font: { size: 11, weight: 'bold' } }
+              }
+            }
+          }
+        });
+      }
+
+      // 6. 渲染各校受檢違規情形及次數清單
+      const violContainer = document.getElementById('dash_violations_container');
+      const violSchools = Object.keys(schoolViolMap).filter(sch => Object.keys(schoolViolMap[sch]).length > 0);
+
+      if (violSchools.length === 0) {
+        violContainer.innerHTML = `
+          <div class="p-6 text-center text-slate-400 bg-slate-50/60 rounded-xl border border-dashed border-slate-200">
+            <i class="fa-solid fa-circle-check text-2xl text-emerald-500 mb-1"></i>
+            <p class="text-xs font-semibold text-slate-600">全校受檢項目全數合格</p>
+            <p class="text-[11px] text-slate-400">目前尚無任何學校之違規異常紀錄</p>
+          </div>
+        `;
+      } else {
+        violContainer.innerHTML = violSchools.map(sch => {
+          const viols = schoolViolMap[sch];
+          const violListHtml = Object.entries(viols).map(([vName, vCount]) => `
+            <div class="flex items-center justify-between text-xs py-1 border-b border-slate-100 last:border-0">
+              <span class="text-slate-700 flex items-center">
+                <i class="fa-solid fa-caret-right text-rose-500 mr-1.5"></i>${vName}
+              </span>
+              <span class="font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">${vCount} 次</span>
+            </div>
+          `).join('');
+
+          return `
+            <div class="p-3 bg-white rounded-lg border border-slate-200 shadow-2xs">
+              <div class="font-bold text-xs text-slate-800 mb-1.5 flex items-center justify-between">
+                <span>${sch}</span>
+                <span class="text-[10px] text-rose-600 font-normal">累計違規項目</span>
+              </div>
+              <div class="space-y-0.5">${violListHtml}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 7. 各校交通車事故統計 (只要統計有報局備查的學校及事故樣態)
+      const accWrapper = document.getElementById('dash_accidents_wrapper');
+      const reportedAccidents = accidentsData.filter(a => a.school && (a.status === '已備查結案' || a.status === '已報局審核列管' || a.status === '審查中'));
+
+      document.getElementById('dash_accident_total_badge').textContent = reportedAccidents.length;
+
+      if (reportedAccidents.length === 0) {
+        accWrapper.innerHTML = `
+          <div class="col-span-full p-8 text-center text-slate-400 bg-slate-50/50 rounded-xl border border-dashed border-slate-200">
+            <i class="fa-solid fa-shield-cat text-3xl text-emerald-500 mb-2"></i>
+            <p class="text-sm font-semibold text-slate-700">目前無任何通報備查之交通事故</p>
+            <p class="text-xs text-slate-400 mt-0.5">系統將在學校完成交通事故報局備查後，自動分析呈現事故樣態與次數</p>
+          </div>
+        `;
+      } else {
+        // 依學校分組事故樣態
+        const accSchoolMap = {};
+        reportedAccidents.forEach(item => {
+          const sch = item.school;
+          if (!accSchoolMap[sch]) accSchoolMap[sch] = { count: 0, reasons: [] };
+          accSchoolMap[sch].count++;
+          accSchoolMap[sch].reasons.push({
+            date: item.date,
+            plate: item.plate,
+            reason: item.reason,
+            status: item.status
+          });
+        });
+
+        accWrapper.innerHTML = Object.entries(accSchoolMap).map(([sch, data]) => {
+          const itemsHtml = data.reasons.map(r => `
+            <div class="p-2 bg-slate-50 rounded border border-slate-100 text-xs text-slate-700 space-y-1">
+              <div class="flex items-center justify-between font-mono text-[11px] text-slate-500">
+                <span>${r.date} (${r.plate})</span>
+                <span class="font-semibold text-emerald-700">${r.status}</span>
+              </div>
+              <p class="text-[11px] leading-relaxed line-clamp-2">${r.reason}</p>
+            </div>
+          `).join('');
+
+          return `
+            <div class="p-4 bg-white rounded-xl border border-slate-200 shadow-2xs space-y-2">
+              <div class="flex items-center justify-between border-b border-slate-100 pb-2">
+                <span class="font-bold text-xs text-slate-800">${sch}</span>
+                <span class="text-xs font-bold text-rose-600 bg-rose-50 px-2 py-0.5 rounded">備查 ${data.count} 次</span>
+              </div>
+              <div class="space-y-1.5">${itemsHtml}</div>
+            </div>
+          `;
+        }).join('');
+      }
     }
 
     function setNowInspectionTime() {
@@ -1211,18 +1523,13 @@
       selectAllChecks(true);
     }
 
-    function renderDashboard() {
-      document.getElementById('kpi_total_inspections').textContent = inspectionsData.length + " 次";
-      document.getElementById('kpi_total_vehicles').textContent = new Set(inspectionsData.map(x => x.plate)).size + " 輛";
-    }
-
     window.addEventListener('DOMContentLoaded', () => {
       setNowInspectionTime();
       renderAllStatisticsTables();
-      // 初始化三方手寫簽名板
       initSignaturePad('sigEdu');
       initSignaturePad('sigSupervisor');
       initSignaturePad('sigPolice');
+      renderDashboard();
     });
   </script>
 </body>
