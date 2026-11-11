@@ -56,6 +56,13 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: #94a3b8;
     }
+    .signature-pad {
+      touch-action: none;
+      background-color: #ffffff;
+      border: 1px dashed #94a3b8;
+      border-radius: 8px;
+      cursor: crosshair;
+    }
   </style>
 </head>
 <body class="min-h-screen flex flex-col bg-slate-50 text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
@@ -141,7 +148,7 @@
             <h2 class="text-lg sm:text-xl font-bold text-slate-800">新北市學生交通車即時聯合稽查紀錄</h2>
           </div>
           <p class="text-xs sm:text-sm text-slate-500 mt-1">
-            由教育局、監理所及警察局三方聯合執行，現場逐項查驗判定車況與法規符合度，填寫完畢可即時產製標準公務稽查核章單 (PDF)。
+            由教育局、監理所及警察局三方聯合執行，現場逐項查驗判定車況與法規符合度，填寫完畢可現場簽章並即時產製標準公務稽查核章單 (PDF)。
           </p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
@@ -269,7 +276,7 @@
           </div>
         </div>
 
-        <!-- 區塊三：安全檢驗指標 (行車紀錄器說明更新，反光標誌/標章免檢) -->
+        <!-- 區塊三：安全檢驗指標 -->
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
           <div class="bg-gradient-to-r from-brand-50 to-slate-50 border-b border-slate-200 px-4 py-3 flex items-center justify-between">
             <h3 class="text-sm sm:text-base font-bold text-brand-900 flex items-center space-x-2">
@@ -363,6 +370,55 @@
           </div>
         </div>
 
+        <!-- 區塊五：現場聯合稽查人員簽名/核章 (新增：教育局、監理所、警察局) -->
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-gradient-to-r from-brand-50 to-slate-50 border-b border-slate-200 px-4 py-3 flex items-center justify-between">
+            <h3 class="text-sm sm:text-base font-bold text-brand-900 flex items-center space-x-2">
+              <span class="w-6 h-6 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs">5</span>
+              <span>聯合稽查人員簽名核章 (教育局、監理所、警察局)</span>
+            </h3>
+            <span class="text-xs text-slate-500 font-medium">支援手寫電子簽名或實體印章帶入</span>
+          </div>
+
+          <div class="p-4 sm:p-6 grid grid-cols-1 md:grid-cols-3 gap-5">
+            <!-- 1. 教育局代表簽名 -->
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 flex items-center">
+                  <i class="fa-solid fa-graduation-cap text-brand-600 mr-1.5"></i>教育局代表簽章
+                </span>
+                <button type="button" onclick="clearSignature('sigEdu')" class="text-[11px] text-slate-400 hover:text-rose-600 underline">清除重簽</button>
+              </div>
+              <canvas id="sigEdu" width="280" height="90" class="signature-pad w-full h-24 bg-white"></canvas>
+              <input type="text" id="signerNameEdu" placeholder="請填寫簽章人姓名 (如：王科員)" class="w-full text-xs rounded border-slate-300 px-2 py-1.5 border bg-white">
+            </div>
+
+            <!-- 2. 監理所代表簽名 -->
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 flex items-center">
+                  <i class="fa-solid fa-car-side text-brand-600 mr-1.5"></i>監理所代表簽章
+                </span>
+                <button type="button" onclick="clearSignature('sigSupervisor')" class="text-[11px] text-slate-400 hover:text-rose-600 underline">清除重簽</button>
+              </div>
+              <canvas id="sigSupervisor" width="280" height="90" class="signature-pad w-full h-24 bg-white"></canvas>
+              <input type="text" id="signerNameSupervisor" placeholder="請填寫簽章人姓名 (如：陳專員)" class="w-full text-xs rounded border-slate-300 px-2 py-1.5 border bg-white">
+            </div>
+
+            <!-- 3. 警察局代表簽名 -->
+            <div class="p-3.5 bg-slate-50 rounded-xl border border-slate-200 space-y-2">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold text-slate-800 flex items-center">
+                  <i class="fa-solid fa-shield-halved text-brand-600 mr-1.5"></i>警察局代表簽章
+                </span>
+                <button type="button" onclick="clearSignature('sigPolice')" class="text-[11px] text-slate-400 hover:text-rose-600 underline">清除重簽</button>
+              </div>
+              <canvas id="sigPolice" width="280" height="90" class="signature-pad w-full h-24 bg-white"></canvas>
+              <input type="text" id="signerNamePolice" placeholder="請填寫簽章人姓名 (如：李警員)" class="w-full text-xs rounded border-slate-300 px-2 py-1.5 border bg-white">
+            </div>
+          </div>
+        </div>
+
         <!-- 儲存與下載操作按鈕列 (恢復雙按鈕並列) -->
         <div class="flex flex-col sm:flex-row items-center justify-end gap-3 pt-2">
           <button type="button" onclick="previewAndDownloadCurrentPDF()" class="w-full sm:w-auto px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-900 text-white font-medium text-sm shadow transition flex items-center justify-center space-x-2">
@@ -427,7 +483,6 @@
           </div>
         </div>
 
-        <!-- 搜尋列與功能操作按鈕列 (支援手動新增與 CSV 匯入) -->
         <div class="px-4 py-3 sm:px-6 bg-white border-b border-slate-100 flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full lg:w-auto flex-1 mr-3">
             <div class="relative w-full sm:w-64">
@@ -536,7 +591,7 @@
     </section>
   </main>
 
-  <!-- 隱藏的 PDF 產製模板容器 (免檢項目與排版完備) -->
+  <!-- 隱藏的 PDF 產製模板容器 (包含教育局、監理所、警察局專屬簽章欄位) -->
   <div id="pdfPrintContainer" style="position: fixed; left: -9999px; top: 0; width: 820px; z-index: -9999; background: #ffffff; pointer-events: none; opacity: 1; visibility: visible;">
     <div id="singleInspectionPdfTemplate" style="width: 794px; padding: 25px 30px; font-family: 'Noto Sans TC', sans-serif; color: #1e293b; background: #ffffff; box-sizing: border-box; display: block !important;">
       <div style="text-align: center; border-bottom: 2px solid #0358a1; padding-bottom: 12px; margin-bottom: 16px;">
@@ -598,19 +653,19 @@
         <tr>
           <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">2</td>
           <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">滅火器</td>
-          <td id="pdf_chk_extinguisher" style="border: 1px solid #cbd5e1; text-align: center; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td id="pdf_chk_extinguisher" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
           <td style="border: 1px solid #cbd5e1; padding: 6px;">有效期限內，指針位於綠色正常壓力區</td>
         </tr>
         <tr>
           <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">3</td>
           <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">車門 / 安全門</td>
-          <td id="pdf_chk_door" style="border: 1px solid #cbd5e1; text-align: center; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td id="pdf_chk_door" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
           <td style="border: 1px solid #cbd5e1; padding: 6px;">安全門通道暢通無阻礙且開關正常</td>
         </tr>
         <tr>
           <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">4</td>
           <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">警報裝置</td>
-          <td id="pdf_chk_alarm" style="border: 1px solid #cbd5e1; text-align: center; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td id="pdf_chk_alarm" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
           <td style="border: 1px solid #cbd5e1; padding: 6px;">倒車警告聲響及安全門連動警報正常</td>
         </tr>
         <tr style="background: #f8fafc; color: #64748b;">
@@ -622,12 +677,12 @@
         <tr>
           <td style="border: 1px solid #cbd5e1; text-align: center; padding: 6px;">6</td>
           <td style="border: 1px solid #cbd5e1; font-weight: bold; padding: 6px;">行車紀錄器</td>
-          <td id="pdf_chk_dashcam" style="border: 1px solid #cbd5e1; text-align: center; font-weight: bold; padding: 6px;">☑ 合格</td>
+          <td id="pdf_chk_dashcam" style="border: 1px solid #cbd5e1; text-align: center; font-size: 13px; font-weight: bold; padding: 6px;">☑ 合格</td>
           <td style="border: 1px solid #cbd5e1; padding: 6px; font-weight: bold;">需有車外前後左右及車內畫面，時間正確</td>
         </tr>
       </table>
 
-      <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 20px;">
+      <table style="width: 100%; border-collapse: collapse; font-size: 12px; margin-bottom: 16px;">
         <tr>
           <td style="border: 1px solid #cbd5e1; background: #f8fafc; font-weight: bold; width: 18%; padding: 6px 8px;">綜合稽查結果</td>
           <td id="pdf_result_status" style="border: 1px solid #cbd5e1; width: 32%; font-weight: bold; padding: 6px 8px; color: #047857;">全項合格</td>
@@ -640,23 +695,43 @@
         </tr>
       </table>
 
-      <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 20px;">
+      <!-- 聯合簽章欄位 (教育局、監理所、警察局、受檢司機) -->
+      <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px;">
         <tr>
-          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
-            <div style="font-weight: bold; color: #334155;">教育局代表簽章：</div>
-            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（簽名或蓋章）</div>
+          <!-- 教育局簽章欄 -->
+          <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #074b83;">【教育局代表簽章】</div>
+            <div id="pdfSigEduImgContainer" style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+              <span id="pdfSigEduText" style="font-size: 10px; color: #94a3b8;">（未手寫簽章）</span>
+            </div>
+            <div id="pdfSignerNameEdu" style="font-size: 11px; font-weight: bold; text-align: center; color: #334155;"></div>
           </td>
-          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
-            <div style="font-weight: bold; color: #334155;">監理單位代表簽章：</div>
-            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（簽名或蓋章）</div>
+
+          <!-- 監理所簽章欄 -->
+          <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #074b83;">【監理所代表簽章】</div>
+            <div id="pdfSigSupervisorImgContainer" style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+              <span id="pdfSigSupervisorText" style="font-size: 10px; color: #94a3b8;">（未手寫簽章）</span>
+            </div>
+            <div id="pdfSignerNameSupervisor" style="font-size: 11px; font-weight: bold; text-align: center; color: #334155;"></div>
           </td>
-          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
-            <div style="font-weight: bold; color: #334155;">警察局代表簽章：</div>
-            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（簽名或蓋章）</div>
+
+          <!-- 警察局簽章欄 -->
+          <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #074b83;">【警察局代表簽章】</div>
+            <div id="pdfSigPoliceImgContainer" style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+              <span id="pdfSigPoliceText" style="font-size: 10px; color: #94a3b8;">（未手寫簽章）</span>
+            </div>
+            <div id="pdfSignerNamePolice" style="font-size: 11px; font-weight: bold; text-align: center; color: #334155;"></div>
           </td>
-          <td style="border: 1px solid #94a3b8; height: 75px; vertical-align: top; padding: 6px; width: 25%;">
-            <div style="font-weight: bold; color: #334155;">受檢駕駛人簽收：</div>
-            <div style="margin-top: 35px; font-size: 10px; color: #94a3b8;">（本人簽名）</div>
+
+          <!-- 受檢駕駛人欄 -->
+          <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
+            <div style="font-weight: bold; color: #334155;">【受檢駕駛人簽收】</div>
+            <div style="height: 50px; display: flex; align-items: center; justify-content: center; margin-top: 4px;">
+              <span style="font-size: 10px; color: #94a3b8;">（現場簽名確認）</span>
+            </div>
+            <div id="pdfDriverSignName" style="font-size: 11px; text-align: center; color: #475569;">駕駛員本人簽署</div>
           </td>
         </tr>
       </table>
@@ -670,7 +745,6 @@
     const DEFAULT_INSPECTIONS = [];
     const DEFAULT_SCHOOL_FLEET = [];
     const DEFAULT_ACCIDENTS = [];
-    const DEFAULT_REGULATIONS = [];
 
     function safeGetStorage(key, defaultVal) {
       try {
@@ -756,6 +830,77 @@
       }
     }
 
+    // ================= 電子簽名板邏輯 (手寫 Canvas) =================
+    const signaturePads = {};
+
+    function initSignaturePad(canvasId) {
+      const canvas = document.getElementById(canvasId);
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      ctx.lineWidth = 2.5;
+      ctx.lineCap = 'round';
+      ctx.strokeStyle = '#074b83';
+
+      let isDrawing = false;
+      let hasDrawn = false;
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height)
+        };
+      }
+
+      function start(e) {
+        e.preventDefault();
+        isDrawing = true;
+        const pos = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(pos.x, pos.y);
+      }
+
+      function move(e) {
+        if (!isDrawing) return;
+        e.preventDefault();
+        const pos = getPos(e);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.stroke();
+        hasDrawn = true;
+      }
+
+      function stop() {
+        isDrawing = false;
+      }
+
+      canvas.addEventListener('mousedown', start);
+      canvas.addEventListener('mousemove', move);
+      window.addEventListener('mouseup', stop);
+
+      canvas.addEventListener('touchstart', start, { passive: false });
+      canvas.addEventListener('touchmove', move, { passive: false });
+      window.addEventListener('touchend', stop);
+
+      signaturePads[canvasId] = {
+        canvas, ctx,
+        hasDrawn: () => hasDrawn,
+        clear: () => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          hasDrawn = false;
+        },
+        toDataURL: () => (hasDrawn ? canvas.toDataURL('image/png') : null)
+      };
+    }
+
+    function clearSignature(canvasId) {
+      if (signaturePads[canvasId]) {
+        signaturePads[canvasId].clear();
+        showToast("已清除簽章內容", "info");
+      }
+    }
+
     // ================= 子頁與彈窗切換 =================
     function switchStatsSubtab(subId) {
       currentActiveStatsSubtab = subId;
@@ -778,7 +923,7 @@
       else if (currentActiveStatsSubtab === 'accidents') openAccidentModal();
     }
 
-    // ================= PDF 產製與下載核心 =================
+    // ================= PDF 產製與下載核心 (包含手寫三方簽章) =================
     function getCurrentInspectionFormData() {
       const opSelect = document.getElementById('insp_operator');
       let op = opSelect.value;
@@ -807,7 +952,16 @@
           dashcam: document.getElementById('check_dashcam').checked
         },
         violations: violations,
-        remarks: document.getElementById('insp_remarks').value.trim() || '查核無違規'
+        remarks: document.getElementById('insp_remarks').value.trim() || '查核無違規',
+        // 簽章資料
+        signatures: {
+          eduImg: signaturePads['sigEdu'] ? signaturePads['sigEdu'].toDataURL() : null,
+          eduName: document.getElementById('signerNameEdu').value.trim() || '新北市教育局代表',
+          supervisorImg: signaturePads['sigSupervisor'] ? signaturePads['sigSupervisor'].toDataURL() : null,
+          supervisorName: document.getElementById('signerNameSupervisor').value.trim() || '監理單位代表',
+          policeImg: signaturePads['sigPolice'] ? signaturePads['sigPolice'].toDataURL() : null,
+          policeName: document.getElementById('signerNamePolice').value.trim() || '警察局代表'
+        }
       };
     }
 
@@ -836,6 +990,38 @@
       }
       document.getElementById('pdf_violations_list').textContent = isCompliant ? '無任何違規' : data.violations.join('、');
       document.getElementById('pdf_remarks').textContent = data.remarks || '現場查驗完畢。';
+
+      // 填充三方簽名圖片與姓名
+      const sigs = data.signatures || {};
+
+      // 1. 教育局
+      const eduBox = document.getElementById('pdfSigEduImgContainer');
+      if (sigs.eduImg) {
+        eduBox.innerHTML = `<img src="${sigs.eduImg}" style="max-height: 48px; max-width: 90%; object-fit: contain;">`;
+      } else {
+        eduBox.innerHTML = `<span style="font-size: 11px; color: #475569; font-weight: bold;">（已現場核章）</span>`;
+      }
+      document.getElementById('pdfSignerNameEdu').textContent = sigs.eduName || '教育局代表';
+
+      // 2. 監理所
+      const supBox = document.getElementById('pdfSigSupervisorImgContainer');
+      if (sigs.supervisorImg) {
+        supBox.innerHTML = `<img src="${sigs.supervisorImg}" style="max-height: 48px; max-width: 90%; object-fit: contain;">`;
+      } else {
+        supBox.innerHTML = `<span style="font-size: 11px; color: #475569; font-weight: bold;">（已現場核章）</span>`;
+      }
+      document.getElementById('pdfSignerNameSupervisor').textContent = sigs.supervisorName || '監理所代表';
+
+      // 3. 警察局
+      const polBox = document.getElementById('pdfSigPoliceImgContainer');
+      if (sigs.policeImg) {
+        polBox.innerHTML = `<img src="${sigs.policeImg}" style="max-height: 48px; max-width: 90%; object-fit: contain;">`;
+      } else {
+        polBox.innerHTML = `<span style="font-size: 11px; color: #475569; font-weight: bold;">（已現場核章）</span>`;
+      }
+      document.getElementById('pdfSignerNamePolice').textContent = sigs.policeName || '警察局代表';
+
+      document.getElementById('pdfDriverSignName').textContent = `駕駛員：${data.driver_name || '本人簽名'}`;
     }
 
     function generatePdfFromElement(data) {
@@ -850,14 +1036,12 @@
       }).from(element).save();
     }
 
-    // 手動點擊「下載勾選完成資料表 (PDF檔)」
     function previewAndDownloadCurrentPDF() {
       const data = getCurrentInspectionFormData();
-      showToast("正在產製 PDF 稽查紀錄單...", "info");
+      showToast("正在產製含三方簽章之 PDF 稽查紀錄單...", "info");
       generatePdfFromElement(data);
     }
 
-    // 點擊「儲存稽查紀錄並更新數據」：儲存後自動產製下載 PDF
     function handleInspectionSubmit(e) {
       e.preventDefault();
       const data = getCurrentInspectionFormData();
@@ -1011,19 +1195,34 @@
       document.getElementById('insp_driver_name').value = '張志明';
       document.getElementById('insp_driver_id').value = 'F123456789';
       document.getElementById('insp_location').value = '文化路一段與民權路交叉路口';
+      document.getElementById('signerNameEdu').value = '王專員';
+      document.getElementById('signerNameSupervisor').value = '陳稽查員';
+      document.getElementById('signerNamePolice').value = '李警員';
       setNowInspectionTime();
       selectAllChecks(true);
     }
 
     function resetInspectionForm() {
       document.getElementById('inspectionForm').reset();
+      clearSignature('sigEdu');
+      clearSignature('sigSupervisor');
+      clearSignature('sigPolice');
       setNowInspectionTime();
       selectAllChecks(true);
+    }
+
+    function renderDashboard() {
+      document.getElementById('kpi_total_inspections').textContent = inspectionsData.length + " 次";
+      document.getElementById('kpi_total_vehicles').textContent = new Set(inspectionsData.map(x => x.plate)).size + " 輛";
     }
 
     window.addEventListener('DOMContentLoaded', () => {
       setNowInspectionTime();
       renderAllStatisticsTables();
+      // 初始化三方手寫簽名板
+      initSignaturePad('sigEdu');
+      initSignaturePad('sigSupervisor');
+      initSignaturePad('sigPolice');
     });
   </script>
 </body>
