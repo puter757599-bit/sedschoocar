@@ -432,11 +432,11 @@
     </section>
 
     <!-- ======================================================== -->
-    <!-- 分頁 2: 數據儀表板 (新增指定全部專項統計) -->
+    <!-- 分頁 2: 數據儀表板 (專項統計) -->
     <!-- ======================================================== -->
     <section id="tab-dashboard" class="space-y-6 hidden">
       
-      <!-- 頂部重點指標卡片 (總稽查次數、受檢車輛數、備查統計、租賃自購) -->
+      <!-- 頂部重點指標卡片 -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <!-- 1. 總稽查次數 -->
         <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm flex items-center space-x-4">
@@ -503,7 +503,7 @@
         </div>
       </div>
 
-      <!-- 區塊二：各校受檢次數 (僅列出有被稽查的學校) & 各校受檢違規情形 -->
+      <!-- 區塊二：各校受檢次數 & 各校受檢違規情形 -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- 各校受檢次數 (只要列出有被稽查的學校及次數) -->
         <div class="lg:col-span-7 bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm space-y-3">
@@ -526,7 +526,6 @@
             <canvas id="chartSchoolInspections" class="w-full h-full"></canvas>
           </div>
 
-          <!-- 各校受檢明細膠囊列表 -->
           <div id="dash_school_badges" class="flex flex-wrap gap-1.5 pt-2 border-t border-slate-100"></div>
         </div>
 
@@ -543,13 +542,11 @@
             <span class="text-xs font-semibold text-rose-700 bg-rose-50 px-2 py-0.5 rounded">稽查裁處</span>
           </div>
 
-          <div id="dash_violations_container" class="max-h-80 overflow-y-auto custom-scrollbar space-y-2 pr-1">
-            <!-- 動態渲染各校違規項目與次數 -->
-          </div>
+          <div id="dash_violations_container" class="max-h-80 overflow-y-auto custom-scrollbar space-y-2 pr-1"></div>
         </div>
       </div>
 
-      <!-- 區塊三：各校交通車事故統計 (只要統計有報局備查的學校及事故樣態) -->
+      <!-- 區塊三：各校交通車事故統計 -->
       <div class="bg-white p-4 sm:p-5 rounded-xl border border-slate-200 shadow-sm space-y-4">
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
           <div>
@@ -562,14 +559,12 @@
           <span class="text-xs text-slate-500">通報件數：<b id="dash_accident_total_badge" class="text-rose-600">0</b> 件</span>
         </div>
 
-        <div id="dash_accidents_wrapper" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <!-- 動態呈現事故學校、次數及事故原因樣態 -->
-        </div>
+        <div id="dash_accidents_wrapper" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
       </div>
 
     </section>
 
-    <!-- 分頁 3: 資料統計及下載 (包含手動新增與 CSV 上傳功能) -->
+    <!-- 分頁 3: 資料統計及下載 -->
     <section id="tab-statistics" class="space-y-4 hidden">
       <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
         <div class="px-4 py-3.5 sm:px-6 border-b border-slate-200 bg-slate-50/70 flex flex-col xl:flex-row xl:items-center justify-between gap-3">
@@ -687,17 +682,17 @@
       </div>
     </section>
 
-    <!-- 分頁 4: 法規查詢 -->
+    <!-- 分頁 4: 法規查詢 (包含完整6大專責法規) -->
     <section id="tab-regulations" class="space-y-6 hidden">
       <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4">
         <h2 class="text-lg font-bold text-slate-800 mb-1">學生交通車法規與作業規範查詢</h2>
-        <p class="text-xs text-slate-500">提供中央與新北市各項交通車管理法規。</p>
+        <p class="text-xs text-slate-500">提供中央與新北市各項交通車專責法規、罰則與標準官方全國法規資料庫連結。</p>
       </div>
       <div id="regulationsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
     </section>
   </main>
 
-  <!-- 隱藏的 PDF 產製模板容器 (包含教育局、監理所、警察局專屬簽章欄位) -->
+  <!-- 隱藏的 PDF 產製模板容器 -->
   <div id="pdfPrintContainer" style="position: fixed; left: -9999px; top: 0; width: 820px; z-index: -9999; background: #ffffff; pointer-events: none; opacity: 1; visibility: visible;">
     <div id="singleInspectionPdfTemplate" style="width: 794px; padding: 25px 30px; font-family: 'Noto Sans TC', sans-serif; color: #1e293b; background: #ffffff; box-sizing: border-box; display: block !important;">
       <div style="text-align: center; border-bottom: 2px solid #0358a1; padding-bottom: 12px; margin-bottom: 16px;">
@@ -801,7 +796,7 @@
         </tr>
       </table>
 
-      <!-- 聯合簽章欄位 (教育局、監理所、警察局) -->
+      <!-- 聯合簽章欄位 -->
       <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 15px;">
         <tr>
           <td style="border: 1px solid #94a3b8; height: 95px; vertical-align: top; padding: 6px; width: 25%;">
@@ -847,6 +842,64 @@
     const DEFAULT_INSPECTIONS = [];
     const DEFAULT_SCHOOL_FLEET = [];
     const DEFAULT_ACCIDENTS = [];
+    
+    // 預設六大交通車專屬法規資料庫
+    const DEFAULT_REGULATIONS = [
+      {
+        id: "REG-01",
+        title: "兒童及少年福利與權益保障法",
+        category: "中央法規",
+        authority: "衛生福利部",
+        lastUpdated: "2024-01-03",
+        url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=D0050161",
+        summary: "規範各類兒少機構、托嬰中心、短期課後照顧接送車輛之安全標準。明訂不得有超載、改裝座椅或危及兒少身心健康之情事，主管機關得派員檢查，機構不得規避、妨礙或拒絕。"
+      },
+      {
+        id: "REG-02",
+        title: "學生交通車管理辦法",
+        category: "中央法規",
+        authority: "教育部、交通部",
+        lastUpdated: "2023-06-20",
+        url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=H0070050",
+        summary: "學生交通車核心母法。規範車齡出廠年限管制、駕駛人須持職業駕照且無不良性平與刑案紀錄、強制配置隨車人員陪同、定期投保強制險與乘客責任險，租賃契約須於30日內報局備查。"
+      },
+      {
+        id: "REG-03",
+        title: "道路交通安全規則",
+        category: "中央法規",
+        authority: "交通部",
+        lastUpdated: "2024-03-15",
+        url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040013",
+        summary: "第39條至第42條規範專車設備驗車標準：滅火器在有效效期與正常壓力範圍內固定牢靠、車門安全門無障礙開關順暢、具備合格倒車及安全門警報裝置、裝設車內外多鏡頭行車紀錄器保存影像。"
+      },
+      {
+        id: "REG-04",
+        title: "道路交通管理處罰條例",
+        category: "裁罰與基準",
+        authority: "交通部、內政部",
+        lastUpdated: "2024-04-01",
+        url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040012",
+        summary: "稽查現場處分裁罰基準。第30條第1項第4款超載處罰新臺幣3,000元至18,000元並責令改正；第22條持普通駕照駕駛營運車輛加重處罰；第31條學生專車違規之專屬加重處罰規定。"
+      },
+      {
+        id: "REG-05",
+        title: "汽車運輸業管理規則",
+        category: "中央法規",
+        authority: "交通部",
+        lastUpdated: "2023-12-28",
+        url: "https://law.moj.gov.tw/LawClass/LawAll.aspx?pcode=K0040003",
+        summary: "規範遊覽車客運業及市區客運業承接學校學生交通車專車之營運標準。包括派車單開立、駕駛員駕車時間與休息工時管制作業、車籍定期維修保養保證及車隊安全管理責任。"
+      },
+      {
+        id: "REG-06",
+        title: "新北市學生交通車管理要點",
+        category: "新北市法規",
+        authority: "新北市政府教育局",
+        lastUpdated: "2023-11-05",
+        url: "https://web.law.ntpc.gov.tw/",
+        summary: "新北市轄屬各級學校專車行政作業要點。明訂學校租賃學生專車一律採用教育部定型化契約範本、每學年開學日前彙整報局備查、教育局與監理所及警察局定期與不定期執行三方聯合路檢稽查。"
+      }
+    ];
 
     function safeGetStorage(key, defaultVal) {
       try {
@@ -866,6 +919,7 @@
     let inspectionsData = safeGetStorage('ntpc_inspections', DEFAULT_INSPECTIONS);
     let schoolFleetData = safeGetStorage('ntpc_school_fleet', DEFAULT_SCHOOL_FLEET);
     let accidentsData = safeGetStorage('ntpc_accidents', DEFAULT_ACCIDENTS);
+    let regulationsData = safeGetStorage('ntpc_regulations', DEFAULT_REGULATIONS);
     let gasAppUrl = safeGetStorage('ntpc_gas_url', '');
     let isManagerMode = safeGetStorage('ntpc_manager_mode', true);
     let currentActiveTab = 'inspection';
@@ -890,6 +944,7 @@
       });
       if (tabId === 'statistics') renderAllStatisticsTables();
       if (tabId === 'dashboard') renderDashboard();
+      if (tabId === 'regulations') renderRegulationsList();
     }
 
     function toggleMobileMenu() {
@@ -1275,19 +1330,14 @@
       } catch (e) {}
     }
 
-    // ========================================================
-    // 數據儀表板核心運算渲染 (完整支援指定 7 大專項統計)
-    // ========================================================
+    // ================= 數據儀表板核心運算渲染 =================
     function renderDashboard() {
-      // 1. 總稽查次數
       const totalInspections = inspectionsData.length;
       document.getElementById('dash_total_inspections').textContent = `${totalInspections} 次`;
 
-      // 2. 受檢車輛數 (依車號不重複計算)
       const uniquePlates = new Set(inspectionsData.map(x => x.plate).filter(Boolean));
       document.getElementById('dash_total_vehicles').textContent = `${uniquePlates.size} 輛`;
 
-      // 3. 交通車備查情形 (應備查校數、已備查、未備查)
       const totalSchools = schoolFleetData.length;
       const auditedCount = schoolFleetData.filter(x => (x.status === '已備查' || x.status === '有效備查中')).length;
       const unAuditedCount = totalSchools - auditedCount;
@@ -1300,7 +1350,6 @@
       document.getElementById('dash_audit_rate').textContent = `${auditRate}%`;
       document.getElementById('dash_audit_bar').style.width = `${auditRate}%`;
 
-      // 4. 學校交通車數量 (租賃 vs 自購)
       let rentalBuses = 0;
       let ownedBuses = 0;
       schoolFleetData.forEach(s => {
@@ -1316,9 +1365,8 @@
       document.getElementById('dash_fleet_rental').textContent = `${rentalBuses} 輛`;
       document.getElementById('dash_fleet_owned').textContent = `${ownedBuses} 輛`;
 
-      // 5. 各校受檢次數 (只要列出有被稽查的學校及次數)
       const schoolInspectMap = {};
-      const schoolViolMap = {}; // 6. 各校受檢違規情形及次數
+      const schoolViolMap = {};
 
       inspectionsData.forEach(item => {
         const sch = item.school || '未知學校';
@@ -1351,14 +1399,12 @@
         chartEmptyEl.classList.add('hidden');
         chartCanvasEl.classList.remove('hidden');
 
-        // 渲染膠囊
         badgesContainer.innerHTML = activeSchools.map(sch => `
           <span class="inline-flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-50 text-brand-900 border border-brand-200">
             ${sch}：<b class="ml-1 text-brand-700">${schoolInspectMap[sch]} 次</b>
           </span>
         `).join('');
 
-        // 圖表繪製
         const labels = activeSchools.map(s => s.replace('新北市立', '').replace('新北市私立', ''));
         const dataVals = activeSchools.map(s => schoolInspectMap[s]);
 
@@ -1396,7 +1442,6 @@
         });
       }
 
-      // 6. 渲染各校受檢違規情形及次數清單
       const violContainer = document.getElementById('dash_violations_container');
       const violSchools = Object.keys(schoolViolMap).filter(sch => Object.keys(schoolViolMap[sch]).length > 0);
 
@@ -1432,7 +1477,6 @@
         }).join('');
       }
 
-      // 7. 各校交通車事故統計 (只要統計有報局備查的學校及事故樣態)
       const accWrapper = document.getElementById('dash_accidents_wrapper');
       const reportedAccidents = accidentsData.filter(a => a.school && (a.status === '已備查結案' || a.status === '已報局審核列管' || a.status === '審查中'));
 
@@ -1447,7 +1491,6 @@
           </div>
         `;
       } else {
-        // 依學校分組事故樣態
         const accSchoolMap = {};
         reportedAccidents.forEach(item => {
           const sch = item.school;
@@ -1483,6 +1526,32 @@
           `;
         }).join('');
       }
+    }
+
+    // ================= 法規清單渲染 =================
+    function renderRegulationsList() {
+      const container = document.getElementById('regulationsContainer');
+      if (!container) return;
+      container.innerHTML = regulationsData.map(reg => `
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded ${reg.category === '中央法規' ? 'bg-sky-100 text-sky-800' : (reg.category === '新北市法規' ? 'bg-brand-100 text-brand-800' : 'bg-rose-100 text-rose-800')}">
+                ${reg.category}
+              </span>
+              <span class="text-[11px] text-slate-400">主管機關：${reg.authority}</span>
+            </div>
+            <h3 class="font-bold text-base text-slate-800 mb-1.5">${reg.title}</h3>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">${reg.summary}</p>
+          </div>
+          <div class="border-t border-slate-100 pt-2.5">
+            <a href="${reg.url}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-xs font-semibold text-brand-600 hover:text-brand-800 hover:underline">
+              <span>檢視全國法規 / 官方資料庫</span>
+              <i class="fa-solid fa-arrow-up-right-from-square text-[10px] ml-1"></i>
+            </a>
+          </div>
+        </div>
+      `).join('');
     }
 
     function setNowInspectionTime() {
@@ -1530,6 +1599,7 @@
       initSignaturePad('sigSupervisor');
       initSignaturePad('sigPolice');
       renderDashboard();
+      renderRegulationsList();
     });
   </script>
 </body>
